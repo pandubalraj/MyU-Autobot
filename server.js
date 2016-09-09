@@ -2,13 +2,13 @@ var restify = require('restify');
 var builder = require('botbuilder');
 
 // Get secrets from server environment
-var botConnectorOptions = { 
-    appId: process.env.BOTFRAMEWORK_APPID, 
-    appSecret: process.env.BOTFRAMEWORK_APPSECRET 
+var connector = new builder.ChatConnector({
+    appId: '17b4a6fa-5d57-4183-b486-150fe8e36f22', 
+    appSecret: 'ByWDWjABFMgHe8uORjtQ6Pa' 
 };
 
 // Create bot
-var bot = new builder.BotConnectorBot(botConnectorOptions);
+var bot = new builder.UniversalBot(connector);
 bot.add('/', function (session) {
     
     //respond with user's message
