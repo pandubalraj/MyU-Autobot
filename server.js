@@ -7,10 +7,13 @@ var connector = new builder.ChatConnector({
     appSecret: 'ByWDWjABFMgHe8uORjtQ6Pa' 
 });
 
+//adding luis ai
+var recognizer = new builder.LuisRecognizer('https://api.projectoxford.ai/luis/v1/application?id=3441c805-65b1-4cc0-8b5e-e6c92b747ca8&subscription-key=c9ad898006c6426d95251f015167aaa1&q=');
+var dialog  = new builder.IntentDialog({ recognizers: [recognizer] });
+
 // Create bot
 var bot = new builder.UniversalBot(connector);
-bot.add('/', function (session) {
-    
+bot.dialog('/', function (session) {
     //respond with user's message
     session.send("You said " + session.message.text);
 });
