@@ -8,17 +8,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fuselabs/echobot.git"
+    "url": "git+https://github.com/pandubalraj/echobot.git"
   },
   "keywords": [
     "botframework"
   ],
-  "author": "Fuse Labs",
+  "author": "Pandu Balraj",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/fuselabs/echobot/issues"
+    "url": "https://github.com/pandubalraj/echobot/issues"
   },
-  "homepage": "https://github.com/fuselabs/echobot#readme",
+  "homepage": "https://github.com/pandubalraj/echobot#readme",
   "dependencies": {
+    "botbuilder": "^3.2.3",
+    "restify": "^4.1.1"
   }
 }
