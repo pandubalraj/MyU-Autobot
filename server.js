@@ -5,7 +5,7 @@ var builder = require('botbuilder');
 var connector = new builder.ChatConnector({
     appId: '17b4a6fa-5d57-4183-b486-150fe8e36f22', 
     appSecret: 'ByWDWjABFMgHe8uORjtQ6Pa' 
-};
+});
 
 // Create bot
 var bot = new builder.UniversalBot(connector);
