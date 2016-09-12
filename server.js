@@ -2,8 +2,8 @@ var restify = require('restify');
 var builder = require('botbuilder');
 
 //adding luis ai
-//var recognizer = new builder.LuisRecognizer('https://api.projectoxford.ai/luis/v1/application?id=3441c805-65b1-4cc0-8b5e-e6c92b747ca8&subscription-key=c9ad898006c6426d95251f015167aaa1&q=');
-//var dialog  = new builder.IntentDialog({ recognizers: [recognizer] });
+var recognizer = new builder.LuisRecognizer('https://api.projectoxford.ai/luis/v1/application?id=3441c805-65b1-4cc0-8b5e-e6c92b747ca8&subscription-key=c9ad898006c6426d95251f015167aaa1&q=');
+var dialog  = new builder.IntentDialog({ recognizers: [recognizer] });
 
 // Get secrets from server environment
 var connector = new builder.ChatConnector({
