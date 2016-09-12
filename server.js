@@ -7,8 +7,8 @@ var builder = require('botbuilder');
 
 // Get secrets from server environment
 var connector = new builder.ChatConnector({
-    appId: '17b4a6fa-5d57-4183-b486-150fe8e36f22', 
-    appSecret: 'ByWDWjABFMgHe8uORjtQ6Pa' 
+   appId: process.env.MICROSOFT_APP_ID,
+   appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 
 // Setup Restify Server
