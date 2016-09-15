@@ -40,6 +40,13 @@ dialog.matches('optionsOrderTS', builder.DialogAction.send('You can order Tata S
 dialog.matches('APorderTS', builder.DialogAction.send('To find the list of Authorized Partners in your area, please send an SMS "dl (space)(pincode)" to 56633. For eg. SMS dl 400025 to 56633.'));
 dialog.matches('DiscountOfferTS', builder.DialogAction.send('Tata Sky offers special discounts & additional benefits for consumers who purchase a Tata Sky connection from the website. For more details visit http://www.tatasky.com/wps/portal/TataSky/orderonline'));
 dialog.matches('upgradeTS', builder.DialogAction.send('You can upgrade your current set top box by either getting in touch with the Tata Sky Helpline or by visiting your nearest Tata Sky Authorized Partner. Please mention your subscriber ID while asking for an upgrade & check for offers at the time.'));
+dialog.matches('regSelfcare', builder.DialogAction.send('To register on Selfcare please visit www.mytatasky.com.'));
+dialog.matches('onlineAccMgmnt', builder.DialogAction.send('Yes, by registering yourself on Tata Sky selfcare you can manage your accounts online.'));
+dialog.matches('accCredInfo', builder.DialogAction.send('If the your bank account has been debited but the amount has not been recharged to your Tata Sky Account, due to a Submitted/Failure Status, it would take 7 to 10 working days for the amount to be credited back into your account.'));
+dialog.matches('rechargeDeno', builder.DialogAction.send('Recharge denominations are available from Rs 8 to Rs 9999. However, if you choose the option of recharging online through your debit card/credit card/net banking account on www.mytatasky.com you can recharge for any amount between Rs 8 to Rs 30,000.'));
+dialog.matches('typeRechargeAcc', builder.DialogAction.send('Recharge through ATM, Recharge through SMS, Auto Debit Facility, Recharge using your mobile, Recharge through your local Authorized Partner, Using Credit / Debit Cards or Net banking account.'));
+
+
 
 // // bot.dialog('/', [
 // //     function (session) {
