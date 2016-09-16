@@ -45,7 +45,7 @@ dialog.matches('onlineAccMgmnt', builder.DialogAction.send('Yes, by registering 
 dialog.matches('accCredInfo', builder.DialogAction.send('If the your bank account has been debited but the amount has not been recharged to your Tata Sky Account, due to a Submitted/Failure Status, it would take 7 to 10 working days for the amount to be credited back into your account.'));
 dialog.matches('rechargeDeno', builder.DialogAction.send('Recharge denominations are available from Rs 8 to Rs 9999. However, if you choose the option of recharging online through your debit card/credit card/net banking account on www.mytatasky.com you can recharge for any amount between Rs 8 to Rs 30,000.'));
 dialog.matches('typeRechargeAcc', builder.DialogAction.send('Recharge through ATM, Recharge through SMS, Auto Debit Facility, Recharge using your mobile, Recharge through your local Authorized Partner, Using Credit / Debit Cards or Net banking account.'));
-
+dialog.matches('None', builder.DialogAction.send('Oops!! You are asking out of my knowledge. Please wait let me get trained !'));
 
 
 // // bot.dialog('/', [
