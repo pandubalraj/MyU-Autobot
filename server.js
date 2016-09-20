@@ -42,7 +42,7 @@ var carCost;
 // Create bot root dialog
 bot.dialog('/', [
    function (session) {
-    builder.Prompts.text(session, 'Hi! Welcome to Auto Insurance Chat! May I know your good name please..');
+    builder.Prompts.text(session, 'Hi! Welcome to Auto Insurance Chat! \n May I know your good name please..');
    },
     function (session, results) {
     if (results.response) {
@@ -102,7 +102,6 @@ bot.dialog('/getClaim', [
             session.send('Find your details here \n Car Model: %s',carModel);
             session.send('\n Car Cost: %s',carCost);
             session.send('\n Car RegNo: %s',carRegNo);
-        
     }
 ]);
 
