@@ -55,11 +55,16 @@ bot.dialog('/', [
 
 bot.dialog('/getModel', [
     function (session) {
+        
         // builder.Prompts.choice(session, 'What is the model of you car?',["Audi","BWM","Maruti Suzuki","Porsche","Lexus","Ford","Honda","Hyundai","Tata"],"button");
-                builder.Prompts.choice(session, "Prompts.choice()\n\nChoose a list style (the default is auto.)", "auto|inline|list|button|none");
+                
     },
     function (session, results) {
+        
         if (results.response) {
+            var style = builder.ListStyle[results.response.entity];    
+            builder.Prompts.choice(session, "Prompts.choice()\n\nChoose a list style (the default is auto.)", "auto|inline|list|button|none", { listStyle: style });
+            
             carModel = results.response['entity'];
             session.send("Wow !!! You have %s ... Its a nice car", carModel);
             session.beginDialog('/getCost');
