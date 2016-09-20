@@ -44,13 +44,13 @@ bot.dialog('/', [
         var name = results.response;
         session.send("Welcome %s... Please answer following few questions, so we can quickly get a quote that suits you!",name);
         session.beginDialog('/getModel');
-        }
+    }
     }
 ]);
 
 bot.dialog('/getModel', [
     function (session) {
-        builder.Prompts.choice(session, 'What is the model of you car?',["Audi","BWM","Maruti Suzuki","Porsche","Lexus","Ford","Honda","Hyundai","Tata"],'inline');
+        builder.Prompts.choice(session, 'What is the model of you car?',["Audi","BWM","Maruti Suzuki","Porsche","Lexus","Ford","Honda","Hyundai","Tata"]);
     },
     function (session, results) {
         if (results.response) {
