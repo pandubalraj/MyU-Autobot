@@ -20,19 +20,24 @@ var connector = new builder.ChatConnector({
   appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 var bot = new builder.UniversalBot(connector);
-// // Setup Restify Server
-var server = restify.createServer();
-// Handle Bot Framework messages
-server.post('/api/messages', connector.listen());
-// Serve a static web page
-server.get(/.*/, restify.serveStatic({
-	'directory': '.',
-	'default': 'index.html'
-}));
+// // // Setup Restify Server
+// var server = restify.createServer();
+// // Handle Bot Framework messages
+// server.post('/api/messages', connector.listen());
+// // Serve a static web page
+// server.get(/.*/, restify.serveStatic({
+// 	'directory': '.',
+// 	'default': 'index.html'
+// }));
 
-server.listen(process.env.port|| process.env.PORT || 3978, function () {
-    console.log('%s listening to %s', server.name, server.url); 
-});
+// server.listen(process.env.port|| process.env.PORT || 3978, function () {
+//     console.log('%s listening to %s', server.name, server.url); 
+// });
+
+var carRegNo;
+var name;
+var carModel;
+var carCost;
 
 // Create bot root dialog
 bot.dialog('/', [
@@ -41,9 +46,9 @@ bot.dialog('/', [
    },
     function (session, results) {
     if (results.response) {
-        var name = results.response;
-        session.send("Welcome %s... Please answer following few questions, so we can quickly get a quote that suits you!",name);
-        session.beginDialog('/getModel');
+        name = results.response;
+        session.send("Welcome %s \n Please answer following few questions, so we can quickly get a quote that suits you!",name);
+        session.beginDialog('/getRegNo');
     }
     }
 ]);
@@ -54,7 +59,7 @@ bot.dialog('/getModel', [
     },
     function (session, results) {
         if (results.response) {
-            var carModel = results.response['entity'];
+            carModel = results.response['entity'];
             session.send("Wow !!! You have %s ... Its a nice car", carModel);
             session.beginDialog('/getCost');
         } else {
@@ -70,7 +75,7 @@ bot.dialog('/getCost', [
     },
     function (session, results) {
         if (results.response) {
-            var carCost =  results.response;
+            carCost =  results.response;
         }
         session.beginDialog('/getRegNo');
     }
@@ -82,7 +87,7 @@ bot.dialog('/getRegNo', [
     },    
     function (session, results) {
         if (results.response) {
-            var carRegNo =  results.response;
+            carRegNo = results.response;
             session.beginDialog('/getClaim');
         }
     }
@@ -93,6 +98,13 @@ bot.dialog('/getClaim', [
         builder.Prompts.confirm(session,'Did you do any claim last year.');
     },    
     function (session, results) {
+        if (results.response == 1)
+        {
+            session.send('Good you have not claimed till now.')
+            session.send('Find your details here \n Car Model: %s',carModel);
+            session.send('\n Car Cost: %s',carCost);
+            session.send('\n Car RegNo: %s',carRegNo);
+        }
     }
 ]);
 
