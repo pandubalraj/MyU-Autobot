@@ -71,7 +71,6 @@ bot.dialog('/getCost', [
     function (session, results) {
         if (results.response) {
             var carCost =  results.response;
-            console.log(carCost);
         }
         session.beginDialog('/getRegNo');
     }
@@ -84,7 +83,6 @@ bot.dialog('/getRegNo', [
     function (session, results) {
         if (results.response) {
             var carRegNo =  results.response;
-        } else {
             session.beginDialog('/getClaim');
         }
     }
