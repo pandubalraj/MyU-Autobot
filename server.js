@@ -98,13 +98,11 @@ bot.dialog('/getClaim', [
         builder.Prompts.confirm(session,'Did you do any claim last year.');
     },    
     function (session, results) {
-        if (results.response == 1)
-        {
             session.send('Good you have not claimed till now.')
             session.send('Find your details here \n Car Model: %s',carModel);
             session.send('\n Car Cost: %s',carCost);
             session.send('\n Car RegNo: %s',carRegNo);
-        }
+        
     }
 ]);
 
