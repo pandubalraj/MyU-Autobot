@@ -56,8 +56,7 @@ bot.dialog('/', [
 bot.dialog('/getModel', [
     function (session) {
         // builder.Prompts.choice(session, 'What is the model of you car?',["Audi","BWM","Maruti Suzuki","Porsche","Lexus","Ford","Honda","Hyundai","Tata"],"button");
-        builder.Prompts.choice(session, "Prompts.choice()\n\nNow pick an option.", "option A|option B|option C", "button");
-
+                builder.Prompts.choice(session, "Prompts.choice()\n\nChoose a list style (the default is auto.)", "auto|inline|list|button|none");
     },
     function (session, results) {
         if (results.response) {
