@@ -3,8 +3,8 @@ var builder = require('botbuilder');
 // var sourceFile = require('./sourceFile');
 
 //luis ai app model for TATA SKY
-// var recognizer = new builder.LuisRecognizer('https://api.projectoxford.ai/luis/v1/application?id=3441c805-65b1-4cc0-8b5e-e6c92b747ca8&subscription-key=c9ad898006c6426d95251f015167aaa1&q=');
-// var dialog  = new builder.IntentDialog({ recognizers: [recognizer] });
+var recognizer = new builder.LuisRecognizer('https://api.projectoxford.ai/luis/v1/application?id=3441c805-65b1-4cc0-8b5e-e6c92b747ca8&subscription-key=c9ad898006c6426d95251f015167aaa1&q=');
+var dialog  = new builder.IntentDialog({ recognizers: [recognizer] });
 
 // =============================================================================================
 //DEFAULT BOT BUILDER TO CONNECT WITH CONSOLE CONNECTOR
@@ -15,24 +15,24 @@ var builder = require('botbuilder');
 // =============================================================================================
 
 // Get secrets from server environment
-var bot = new builder.ChatConnector({
+var connector = new builder.ChatConnector({
   appId: process.env.MICROSOFT_APP_ID,
   appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
-
+var bot = new builder.UniversalBot(connector);
 // // Setup Restify Server
-// var server = restify.createServer();
-// // Handle Bot Framework messages
-// server.post('/api/messages', connector.listen());
-// // Serve a static web page
-// server.get(/.*/, restify.serveStatic({
-// 	'directory': '.',
-// 	'default': 'index.html'
-// }));
+var server = restify.createServer();
+// Handle Bot Framework messages
+server.post('/api/messages', connector.listen());
+// Serve a static web page
+server.get(/.*/, restify.serveStatic({
+	'directory': '.',
+	'default': 'index.html'
+}));
 
-// server.listen(process.env.port|| process.env.PORT || 3978, function () {
-//     console.log('%s listening to %s', server.name, server.url); 
-// });
+server.listen(process.env.port|| process.env.PORT || 3978, function () {
+    console.log('%s listening to %s', server.name, server.url); 
+});
 
 // Create bot root dialog
 bot.dialog('/', [
