@@ -48,7 +48,7 @@ bot.dialog('/', [
     if (results.response) {
         name = results.response;
         session.send("Welcome %s \n Please answer following few questions, so we can quickly get a quote that suits you!",name);
-        session.beginDialog('/getRegNo');
+        session.beginDialog('/getModel');
     }
     }
 ]);
