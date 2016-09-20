@@ -6,60 +6,95 @@ var builder = require('botbuilder');
 // var recognizer = new builder.LuisRecognizer('https://api.projectoxford.ai/luis/v1/application?id=3441c805-65b1-4cc0-8b5e-e6c92b747ca8&subscription-key=c9ad898006c6426d95251f015167aaa1&q=');
 // var dialog  = new builder.IntentDialog({ recognizers: [recognizer] });
 
-var dialog = new builder.IntentDialog();
+// =============================================================================================
+//DEFAULT BOT BUILDER TO CONNECT WITH CONSOLE CONNECTOR
+// var builder = require('botbuilder');
+// var connector = new builder.ConsoleConnector().listen();
+// var bot = new builder.UniversalBot(connector);
+//DEFAULT BOT BUILDER TO CONNECT WITH CONSOLE CONNECTOR
+// =============================================================================================
 
 // Get secrets from server environment
-var connector = new builder.ChatConnector({
+var bot = new builder.ChatConnector({
   appId: process.env.MICROSOFT_APP_ID,
   appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 
-// Setup Restify Server
-var server = restify.createServer();
-// Handle Bot Framework messages
-server.post('/api/messages', connector.listen());
-// Serve a static web page
-server.get(/.*/, restify.serveStatic({
-	'directory': '.',
-	'default': 'index.html'
-}));
-server.listen(process.env.port|| process.env.PORT || 3978, function () {
-    console.log('%s listening to %s', server.name, server.url); 
-});
+// // Setup Restify Server
+// var server = restify.createServer();
+// // Handle Bot Framework messages
+// server.post('/api/messages', connector.listen());
+// // Serve a static web page
+// server.get(/.*/, restify.serveStatic({
+// 	'directory': '.',
+// 	'default': 'index.html'
+// }));
 
+// server.listen(process.env.port|| process.env.PORT || 3978, function () {
+//     console.log('%s listening to %s', server.name, server.url); 
+// });
 
-// Create bot
-var bot = new builder.UniversalBot(connector);
-bot.dialog('/',dialog);
-
-dialog.onBegin(function (session, args, next) {
+// Create bot root dialog
+bot.dialog('/', [
+   function (session) {
     builder.Prompts.text(session, 'Hi! Welcome to Auto Insurance Chat! May I know your good name please..');
-    session.dialogData.name = args.name;
-    session.send("Welcome %s... Please answer following few questions, so we can quickly get a quote that suits you!", args.name);
-    session.beginDialog('/getModel');
-});
-
+   },
+    function (session, results) {
+    if (results.response) {
+        var name = results.response;
+        session.send("Welcome %s... Please answer following few questions, so we can quickly get a quote that suits you!",name);
+        session.beginDialog('/getModel');
+        }
+    }
+]);
 
 bot.dialog('/getModel', [
-    function (session, args) {
-        builder.Prompts.choice(session, 'What is the model of you car?',["Audi","BWM","Maruti Suzuki","Porsche","Lexus","Ford","Honda","Hyundai","Tata"];
-        session.dialogData.carname = args.carname;
+    function (session) {
+        builder.Prompts.choice(session, 'What is the model of you car?',["Audi","BWM","Maruti Suzuki","Porsche","Lexus","Ford","Honda","Hyundai","Tata"],'inline');
     },
     function (session, results) {
         if (results.response) {
-            var carModel = session.dialogData.carname;
+            var carModel = results.response['entity'];
+            session.send("Wow !!! You have %s ... Its a nice car", carModel);
+            session.beginDialog('/getCost');
         } else {
-            session.send("ok");
+            session.send('Please prompt valid car model...');
+            session.beginDialog('/getModel');
         }
-        session.beginDialog('/getCost');
     }
 ]);
 
 bot.dialog('/getCost', [
     function (session, args) {
-        builder.Prompts.text(session, 'What is the make and model of you car?');
-        session.dialogData.carname = args.carname;
-        session.beginDialog('/getCost');
+        builder.Prompts.number(session,'What is the price of your car?');
+    },
+    function (session, results) {
+        if (results.response) {
+            var carCost =  results.response;
+            console.log(carCost);
+        }
+        session.beginDialog('/getRegNo');
+    }
+]);
+
+bot.dialog('/getRegNo', [
+    function (session) {
+        builder.Prompts.number(session,'Can you please share the registration number.');
+    },    
+    function (session, results) {
+        if (results.response) {
+            var carRegNo =  results.response;
+        } else {
+            session.beginDialog('/getClaim');
+        }
+    }
+]);
+
+bot.dialog('/getClaim', [
+    function (session) {
+        builder.Prompts.confirm(session,'Did you do any claim last year.');
+    },    
+    function (session, results) {
     }
 ]);
 
