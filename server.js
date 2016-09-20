@@ -55,7 +55,7 @@ bot.dialog('/', [
 
 bot.dialog('/getModel', [
     function (session) {
-        builder.Prompts.choice(session, 'What is the model of you car?',["Audi","BWM","Maruti Suzuki","Porsche","Lexus","Ford","Honda","Hyundai","Tata"]);
+        builder.Prompts.choice(session, 'What is the model of you car?',["Audi","BWM","Maruti Suzuki","Porsche","Lexus","Ford","Honda","Hyundai","Tata"],"button");
     },
     function (session, results) {
         if (results.response) {
@@ -88,8 +88,8 @@ bot.dialog('/getRegNo', [
     function (session, results) {
         if (results.response) {
             carRegNo = results.response;
-            session.beginDialog('/getClaim');
         }
+        session.beginDialog('/getClaim');
     }
 ]);
 
