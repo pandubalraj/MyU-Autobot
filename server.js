@@ -86,6 +86,7 @@ bot.dialog('/getRegNo', [
     },    
     function (session, results) {
         if (results.response) {
+            console.log(results.response);
             carRegNo = results.response;
             session.beginDialog('/getClaim');
         }
