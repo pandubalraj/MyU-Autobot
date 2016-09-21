@@ -40,8 +40,8 @@ bot.dialog('/', [
     if (results.response) {
         name = results.response;
         session.send("Welcome %s \n Please answer following few questions, so we can quickly get a quote that suits you!",name);
-        session.beginDialog('/getModel');
     }
+    session.beginDialog('/getModel');
     }
 ]);
 
@@ -75,7 +75,13 @@ bot.dialog('/getCost', [
 
 bot.dialog('/getRegNo', [
     function (session) {
-        builder.Prompts.number(session,'Can you please share the registration number.');
+        builder.Prompts.number(session,'Can you please share the registration number. Please find below the image for RTO no.');
+        var msg = new builder.Message(session)
+            .attachments([{
+                contentType: "image/jpeg",
+                contentUrl: "http://www.team-bhp.com/forum/attachments/indian-car-scene/164039d1248451018t-high-security-registration-plates-hsrp-india-dsc_6975.jpg"
+            }]);
+        session.endDialog(msg);
     },    
     function (session, results) {
         if (results.response) {
@@ -90,7 +96,7 @@ bot.dialog('/getClaim', [
         builder.Prompts.confirm(session,'Did you do any claim last year.');
     },    
     function (session, results) {
-            session.send('Good you have not claimed till now.')
+            // session.send('Good you have not claimed till now.')
             session.send('Find your details here \n Car Model: %s',carModel);
             session.send('\n Car Cost: %s',carCost);
             session.send('\n Car RegNo: %s',carRegNo);
