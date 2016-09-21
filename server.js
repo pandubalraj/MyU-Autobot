@@ -82,15 +82,20 @@ bot.dialog('/getRegNo', [
                 contentType: "image/jpeg",
                 contentUrl: "http://www.team-bhp.com/forum/attachments/indian-car-scene/164039d1248451018t-high-security-registration-plates-hsrp-india-dsc_6975.jpg"
             }]);
-        // session.endDialog(msg);
+        session.endDialog(msg);
     },    
     function (session, results) {
         if (results.response) {
             console.log(results.response);
             carRegNo = results.response;
+        }
+    },
+    function (session, results) {
+        if (results.response) {
             session.beginDialog('/getClaim');
         }
     }
+    
 ]);
 
 bot.dialog('/getClaim', [
