@@ -76,7 +76,7 @@ bot.dialog('/getCost', [
 
 bot.dialog('/getRegNo', [
     function (session) {
-        session.send('Can you please share the registration number. Please find below the sample image for RTO no.')
+        builder.Prompts.number(session,'Can you please share the registration number. Please find below the sample image for RTO no.');
         var msg = new builder.Message(session)
             .attachments([{
                 contentType: "image/jpeg",
