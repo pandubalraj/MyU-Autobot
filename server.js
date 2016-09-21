@@ -76,13 +76,13 @@ bot.dialog('/getCost', [
 
 bot.dialog('/getRegNo', [
     function (session) {
-        builder.Prompts.number(session,'Can you please share the registration number. Please find below the image for RTO no.');
+        builder.Prompts.number(session,'Can you please share the registration number. Please find below the sample image for RTO no.');
         var msg = new builder.Message(session)
             .attachments([{
                 contentType: "image/jpeg",
                 contentUrl: "http://www.team-bhp.com/forum/attachments/indian-car-scene/164039d1248451018t-high-security-registration-plates-hsrp-india-dsc_6975.jpg"
             }]);
-        session.endDialog(msg);
+        // session.endDialog(msg);
     },    
     function (session, results) {
         if (results.response) {
