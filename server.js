@@ -6,14 +6,6 @@ var builder = require('botbuilder');
 var recognizer = new builder.LuisRecognizer('https://api.projectoxford.ai/luis/v1/application?id=3441c805-65b1-4cc0-8b5e-e6c92b747ca8&subscription-key=c9ad898006c6426d95251f015167aaa1&q=');
 var dialog  = new builder.IntentDialog({ recognizers: [recognizer] });
 
-// =============================================================================================
-//DEFAULT BOT BUILDER TO CONNECT WITH CONSOLE CONNECTOR
-// var builder = require('botbuilder');
-// var connector = new builder.ConsoleConnector().listen();
-// var bot = new builder.UniversalBot(connector);
-//DEFAULT BOT BUILDER TO CONNECT WITH CONSOLE CONNECTOR
-// =============================================================================================
-
 // Get secrets from server environment
 var connector = new builder.ChatConnector({
   appId: process.env.MICROSOFT_APP_ID,
@@ -55,16 +47,10 @@ bot.dialog('/', [
 
 bot.dialog('/getModel', [
     function (session) {
-        
-        // builder.Prompts.choice(session, 'What is the model of you car?',["Audi","BWM","Maruti Suzuki","Porsche","Lexus","Ford","Honda","Hyundai","Tata"],"button");
-                
+        builder.Prompts.choice(session, 'What is the model of you car?',["Audi","BWM","Maruti Suzuki","Porsche","Lexus","Ford","Honda","Hyundai","Tata"]);
     },
     function (session, results) {
-        
         if (results.response) {
-            var style = builder.ListStyle[results.response.entity];    
-            builder.Prompts.choice(session, "Prompts.choice()\n\nChoose a list style (the default is auto.)", "auto|inline|list|button|none", { listStyle: style });
-            
             carModel = results.response['entity'];
             session.send("Wow !!! You have %s ... Its a nice car", carModel);
             session.beginDialog('/getCost');
@@ -94,8 +80,8 @@ bot.dialog('/getRegNo', [
     function (session, results) {
         if (results.response) {
             carRegNo = results.response;
+            session.beginDialog('/getClaim');
         }
-        session.beginDialog('/getClaim');
     }
 ]);
 
@@ -131,58 +117,5 @@ bot.dialog('/getClaim', [
 // dialog.matches('typeRechargeAcc', builder.DialogAction.send('Recharge through ATM, Recharge through SMS, Auto Debit Facility, Recharge using your mobile, Recharge through your local Authorized Partner, Using Credit / Debit Cards or Net banking account.'));
 // dialog.matches('None', builder.DialogAction.send('Oops!! You are asking out of my knowledge. Please wait let me get trained !'));
 
-// =============================================================================================
-
-// BOT DIALOG FOR IMAGE DISPLAY IN CHAT
-// // bot.dialog('/', [
-// //     function (session) {
-// //         session.send("You can easily send pictures to a user...");
-// //         var msg = new builder.Message(session)
-// //             .attachments([{
-// //                 contentType: "image/jpeg",
-// //                 contentUrl: "http://www.theoldrobots.com/images62/Bender-18.JPG"
-// //             }]);
-// //         session.endDialog(msg);
-// //     }
-// // ]);
 
 
-// =============================================================================================
-
-//DEFAULT BOT BUILDER TO CONNECT WITH CONSOLE CONNECTOR
-// var builder = require('botbuilder');
-// var connector = new builder.ConsoleConnector().listen();
-// var bot = new builder.UniversalBot(connector);
-//DEFAULT BOT BUILDER TO CONNECT WITH CONSOLE CONNECTOR
-// =============================================================================================
-
-// APP TO CONNECT WITH BING API USING node-rest-client NPM
-
-// var Client = require('node-rest-client').Client;
-// var client = new Client();
-
-//         var args = {
-//         headers:{"Content-Type": "application/json", "Ocp-Apim-Subscription-Key": "9f27042d99dd4d89a6f074b781e53afb" } // request headers 
-//         };
-//         client.get("https://api.cognitive.microsoft.com/bing/v5.0/search?q="+query, args, function (data, response) {});
-//         client.registerMethod("jsonMethod", "https://api.cognitive.microsoft.com/bing/v5.0/search?q="+query, "GET");
-//         client.methods.jsonMethod(args,function (data, response) {
-            // console.log(data['webPages']['value'][0]['snippet']);
-            // console.log(data['webPages']['value'][0]['displayUrl']);
-//         });
-
-// }
-
-// bot.dialog('/', [
-//     function (session) {
-//         builder.Prompts.text(session, 'Hi! Please raise your query to search?');
-//     },
-//     function (session, results) {
-//         session.dialogData.query = results.response;
-//         var query = session.dialogData.query;
-//         var result = getResult(query);
-//         session.send("You enquired about '%s'!", session.dialogData.query);
-//     }
-// ]);
-
-// =============================================================================================
