@@ -48,7 +48,7 @@ bot.dialog('/', [
 
 bot.dialog('/getModel', [
     function (session) {
-        builder.Prompts.choice(session, 'What is the model of you car?',["Audi","BWM","Maruti Suzuki","Porsche","Lexus","Ford","Honda","Hyundai","Tata"],"button");
+        builder.Prompts.choice(session, 'What is the model of you car?',["Audi","BWM","Maruti Suzuki","Porsche","Lexus","Ford","Honda","Hyundai","Tata"], {listStyle: builder.ListStyle["button"]});
     },
     function (session, results) {
         if (results.response) {
