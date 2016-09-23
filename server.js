@@ -30,12 +30,13 @@ var carRegNo;
 var name;
 var carModel;
 var carCost;
+var carPDate;
 
 // Create bot root dialog
 bot.dialog('/', [
    function (session) {
     session.send("Welcome to Auto Insurance Bot !!!");
-    builder.Prompts.text(session, "May I have your name please| Hi! What is your name ?");
+    builder.Prompts.text(session, ["May I have your name please","Hi! What is your name ?"]);
    },
     function (session, results) {
     if (results.response) {
@@ -50,12 +51,37 @@ bot.dialog('/', [
 
 bot.dialog('/getModel', [
     function (session) {
-        builder.Prompts.choice(session, 'What is the model of you car?',["Audi","BWM","Maruti Suzuki","Porsche","Lexus","Ford","Honda","Hyundai","Tata"], {listStyle: builder.ListStyle["button"]});
+        builder.Prompts.choice(session, 'What is the model of your car?',["Audi","BWM","Maruti Suzuki","Porsche","Lexus","Ford","Honda","Hyundai","Tata"]);
     },
     function (session, results) {
         if (results.response) {
             carModel = results.response['entity'];
-            // session.send("Wow !!! You have %s ... Its a nice car", carModel);
+            session.beginDialog('/getPDate');
+        } else {
+            session.send('Please prompt valid car model...');
+            session.beginDialog('/getModel');
+        }
+    }
+]);
+
+bot.dialog('/getPDate', [
+    function (session) {
+    session.send("Welcome to Auto Insurance Bot !!!");
+    builder.Prompts.time(session, "When did you purchase your car?");
+   },
+    function (session, results) {
+    if (results.response) {
+        carPDate = new Date(results.response["resolution"]["start"]);
+        }
+    }
+    
+    function (session) {
+        builder.Prompts.time(session, 'When did you purchase your car ?');
+    },
+    function (session, results) {
+        if (results.response) {
+            session.send(results.response)
+            carPDate = results.response;
             session.beginDialog('/getCost');
         } else {
             session.send('Please prompt valid car model...');
@@ -104,7 +130,8 @@ bot.dialog('/getClaim', [
         if(results.response == 2 )
         {
         session.send('Good you have not claimed till now.')
-        session.send('Find your details here \n\n Car Model: %s \n\n Cost of your Car: %s \n\n Car Reg No: %s',carModel,carCost,carRegNo);
+        var date = carPDate.getDate(), carPDate.getMonth()+1, carPDate.getFullYear()
+        session.send('Find your details here \n\n Car Model: %s \n\n Cost of your Car: %s \n\n Car Reg No: %s \n\n You purchased car on: %d',carModel,carCost,carRegNo,date);
         }
         else {
         session.send('Find your details here \n\n Car Model: %s \n\n Cost of your Car: %s \n\n Car Reg No: %s',carModel,carCost,carRegNo);
