@@ -34,13 +34,14 @@ var carCost;
 // Create bot root dialog
 bot.dialog('/', [
    function (session) {
-    builder.Prompts.text(session, 'Hi! Welcome to Auto Insurance Chat! \n May I know your good name please..');
+    // builder.Prompts.text(session, 'Hi! Welcome to Auto Insurance Chat! \n May I know your good name please..');
+    builder.Prompts.number(session, 'Enter number',{retryPrompt: "You have not given the number. Recheck !!"});
    },
     function (session, results) {
     if (results.response) {
-        name = results.response;
-        session.send("Welcome %s \n Please answer following few questions, so we can quickly get a quote that suits you!",name);
-        session.beginDialog('/getModel');
+        // name = results.response;
+        // session.send("Welcome %s \n Please answer following few questions, so we can quickly get a quote that suits you!",name);
+        // session.beginDialog('/getModel');
         }
     
     }
@@ -48,7 +49,7 @@ bot.dialog('/', [
 
 bot.dialog('/getModel', [
     function (session) {
-        builder.Prompts.choice(session, 'What is the model of you car?',["Audi","BWM","Maruti Suzuki","Porsche","Lexus","Ford","Honda","Hyundai","Tata"], {listStyle: builder.ListStyle["list"]});
+        builder.Prompts.choice(session, 'What is the model of you car?',["Audi","BWM","Maruti Suzuki","Porsche","Lexus","Ford","Honda","Hyundai","Tata"], {listStyle: builder.ListStyle["button"]});
     },
     function (session, results) {
         if (results.response) {
