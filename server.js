@@ -130,8 +130,9 @@ bot.dialog('/getClaim', [
         if(results.response == 2 )
         {
         session.send('Good you have not claimed till now.')
-        var date = carPDate.getDate(), carPDate.getMonth()+1, carPDate.getFullYear()
-        session.send('Find your details here \n\n Car Model: %s \n\n Cost of your Car: %s \n\n Car Reg No: %s \n\n You purchased car on: %d',carModel,carCost,carRegNo,date);
+        var date = new Date(carPDate);
+        var pdate = "%d-%d-%d",date.getDate(), date.getMonth()+1, date.getFullYear();
+        session.send('Find your details here \n\n Car Model: %s \n\n Cost of your Car: %s \n\n Car Reg No: %s \n\n You purchased car on: %s',carModel,carCost,carRegNo,pdate);
         }
         else {
         session.send('Find your details here \n\n Car Model: %s \n\n Cost of your Car: %s \n\n Car Reg No: %s',carModel,carCost,carRegNo);
