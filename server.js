@@ -72,20 +72,12 @@ bot.dialog('/getPDate', [
     function (session, results) {
     if (results.response) {
         carPDate = new Date(results.response["resolution"]["start"]);
+        session.beginDialog('/getCost');
         }
-    }
-    
-    function (session) {
-        builder.Prompts.time(session, 'When did you purchase your car ?');
-    },
-    function (session, results) {
-        if (results.response) {
-            session.send(results.response)
-            carPDate = results.response;
-            session.beginDialog('/getCost');
-        } else {
-            session.send('Please prompt valid car model...');
-            session.beginDialog('/getModel');
+    else 
+        {
+        session.send('Please prompt valid car model...');
+        session.beginDialog('/getModel');
         }
     }
 ]);
@@ -130,12 +122,10 @@ bot.dialog('/getClaim', [
         if(results.response == 2 )
         {
         session.send('Good you have not claimed till now.')
-        var date = new Date(carPDate);
-        var pdate = "%d-%d-%d",date.getDate(), date.getMonth()+1, date.getFullYear();
-        session.send('Find your details here \n\n Car Model: %s \n\n Cost of your Car: %s \n\n Car Reg No: %s \n\n You purchased car on: %s',carModel,carCost,carRegNo,pdate);
+        session.send('Find your details here \n\n Car Model: %s \n\n Cost of your Car: %s \n\n Car Reg No: %s \n\n You purchased car on: %d-%d-%d',carModel,carCost,carRegNo,carPDate.getDate(),carPDate.getMonth()+1,carPDate.getFullYear());
         }
         else {
-        session.send('Find your details here \n\n Car Model: %s \n\n Cost of your Car: %s \n\n Car Reg No: %s',carModel,carCost,carRegNo);
+        session.send('Find your details here \n\n Car Model: %s \n\n Cost of your Car: %s \n\n Car Reg No: %s \n\n You purchased car on: %d-%d-%d',carModel,carCost,carRegNo,carPDate.getDate(),carPDate.getMonth()+1,carPDate.getFullYear());
         }
     }
 ]);
