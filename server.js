@@ -48,7 +48,7 @@ bot.dialog('/', [
 
 bot.dialog('/getModel', [
     function (session) {
-        builder.Prompts.choice(session, 'What is the model of you car?',["Audi","BWM","Maruti Suzuki","Porsche","Lexus","Ford","Honda","Hyundai","Tata"]);
+        builder.Prompts.choice(session, 'What is the model of you car?',["Audi","BWM","Maruti Suzuki","Porsche","Lexus","Ford","Honda","Hyundai","Tata"],"button");
     },
     function (session, results) {
         if (results.response) {
@@ -101,7 +101,7 @@ bot.dialog('/getClaim', [
         session.send('Find your details here \n Car Model: %s',carModel);
         session.send('\n Car Cost: %s',carCost);
         session.send('\n Car RegNo: %s',carRegNo);
-        session.endDialog();
+        // session.endDialog();
     }
 ]);
 
