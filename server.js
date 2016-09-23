@@ -51,23 +51,74 @@ bot.dialog('/', [
 
 bot.dialog('/getModel', [
     function (session) {
-        builder.Prompts.choice(session, 'What is the model of your car?',["Audi","BWM","Maruti Suzuki","Porsche","Lexus","Ford","Honda","Hyundai","Tata"]);
+        builder.Prompts.confirm(session,'Are you fan of German car manufacturer?');
     },
     function (session, results) {
         if (results.response) {
-            carModel = results.response['entity'];
-            session.beginDialog('/getPDate');
-        } else {
-            session.send('Please prompt valid car model...');
-            session.beginDialog('/getModel');
+            session.beginDialog('/ChooseGerman');
+        } 
+        else {
+            session.beginDialog('/getJapan');
         }
+    }
+]);
+
+bot.dialog('/ChooseGerman',[
+    function (session) {
+        builder.Prompts.choice(session, 'Then you might own any of these car',["Audi","BWM","Mercedes"]);
+    },
+    function(session,results){
+        if (results.response){
+            carModel = results.response;
+            session.beginDialog('/getPDate');
+        }
+    }
+]);
+    
+bot.dialog('/getJapan',[
+    function(session) {
+        builder.Prompts.confirm(session,"Then you might be Japanese Manufacturer fan");
+    },
+    function(session,results) {
+        if(results.response){
+            session.beginDialog('/JapanChoose');
+        }
+        else {
+        session.beginDialog('/OtherCar');
+        }
+    }
+]);
+
+bot.dialog('/JapanChoose',[
+    function(session) {
+        builder.Prompts.choice(session, 'I hope You might own any of these',["Honda","Toyota","Suzuku"]);
+    },
+    function(session,results) {
+        if (session.results)
+        {
+            carModel = results.response();
+            session.beginDialog('/getPDate');
+        }
+        else
+        {
+            session.beginDialog('/OtherCar');
+        }
+    }
+]);
+
+bot.dialog('/OtherCar', [
+    function(session){
+        builder.Prompts.text(session, 'Who is the Manufacturer of your car...');        
+    },
+    function(session,results){
+        carModel = results.response;
+        session.beginDialog('/getPDate');
     }
 ]);
 
 bot.dialog('/getPDate', [
     function (session) {
-    session.send("Welcome to Auto Insurance Bot !!!");
-    builder.Prompts.time(session, "When did you purchase your car?");
+    builder.Prompts.time(session, "When did you purchase your car? Please enter your date format as DD-MM-YYYY");
    },
     function (session, results) {
     if (results.response) {
@@ -116,11 +167,10 @@ bot.dialog('/getRegNo', [
 
 bot.dialog('/getClaim', [
     function (session) {
-        builder.Prompts.confirm(session,'Did you do any claim last year.');
+        builder.Prompts.confirm(session,"We hope you didn't do any claim this year");
     },    
     function (session, results) {
-        console.log(results.response.entity);
-        if(results.response.entity == 2 || 'no' )
+        if(results.response)
         {
         session.send('Good you have not claimed till now.')
         session.send('Find your details here \n\n Car Model: %s \n\n Cost of your Car: %s \n\n Car Reg No: %s \n\n You purchased car on: %d-%d-%d',carModel,carCost,carRegNo,carPDate.getDate(),carPDate.getMonth()+1,carPDate.getFullYear());
