@@ -69,7 +69,7 @@ bot.dialog('/ChooseGerman',[
     },
     function(session,results){
         if (results.response){
-            carModel = results.response;
+            carModel = results.response["entity"];
             session.beginDialog('/getPDate');
         }
     }
@@ -96,7 +96,7 @@ bot.dialog('/JapanChoose',[
     function(session,results) {
         if (session.results)
         {
-            carModel = results.response();
+            carModel = results.response["entity"];
             session.beginDialog('/getPDate');
         }
         else
@@ -111,7 +111,7 @@ bot.dialog('/OtherCar', [
         builder.Prompts.text(session, 'Who is the Manufacturer of your car...');        
     },
     function(session,results){
-        carModel = results.response;
+        carModel = results.response["entity"];
         session.beginDialog('/getPDate');
     }
 ]);
