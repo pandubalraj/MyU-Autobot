@@ -119,7 +119,8 @@ bot.dialog('/getClaim', [
         builder.Prompts.confirm(session,'Did you do any claim last year.');
     },    
     function (session, results) {
-        if(results.response == 2 )
+        console.log(results.response.entity);
+        if(results.response.entity == 2 || 'no' )
         {
         session.send('Good you have not claimed till now.')
         session.send('Find your details here \n\n Car Model: %s \n\n Cost of your Car: %s \n\n Car Reg No: %s \n\n You purchased car on: %d-%d-%d',carModel,carCost,carRegNo,carPDate.getDate(),carPDate.getMonth()+1,carPDate.getFullYear());
