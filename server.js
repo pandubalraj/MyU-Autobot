@@ -91,7 +91,7 @@ bot.dialog('/getJapan',[
 
 bot.dialog('/JapanChoose',[
     function(session) {
-        builder.Prompts.choice(session, 'I hope You might own any of these',["Honda","Toyota","Suzuku"]);
+        builder.Prompts.choice(session, 'I hope You might own any of these',["Honda","Toyota","Suzuki"]);
     },
     function(session,results) {
         if (session.results)
