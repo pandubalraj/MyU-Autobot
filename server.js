@@ -173,10 +173,10 @@ bot.dialog('/getClaim', [
         if(results.response)
         {
         session.send('Good you have not claimed till now.')
-        session.send('Find your details here \n\n Car Model: %s \n\n Cost of your Car: %s \n\n Car Reg No: %s \n\n You purchased car on: %d-%d-%d',carModel,carCost,carRegNo,carPDate.getDate(),carPDate.getMonth()+1,carPDate.getFullYear());
+        session.send('Find your details here \n Car Model: %s \n Cost of your Car: %s \n Car Reg No: %s \n You purchased car on: %d-%d-%d',carModel,carCost,carRegNo,carPDate.getDate(),carPDate.getMonth()+1,carPDate.getFullYear());
         }
         else {
-        session.send('Find your details here \n\n Car Model: %s \n\n Cost of your Car: %s \n\n Car Reg No: %s \n\n You purchased car on: %d-%d-%d',carModel,carCost,carRegNo,carPDate.getDate(),carPDate.getMonth()+1,carPDate.getFullYear());
+        session.send('Find your details here \n Car Model: %s \n Cost of your Car: %s \n Car Reg No: %s \n You purchased car on: %d-%d-%d',carModel,carCost,carRegNo,carPDate.getDate(),carPDate.getMonth()+1,carPDate.getFullYear());
         }
     }
 ]);
